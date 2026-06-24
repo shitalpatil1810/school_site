@@ -1,0 +1,36 @@
+{
+  "name": "school-site",
+  "version": "0.1.0",
+  "description": "Dummy school website — Next.js + Payload CMS practice build (precursor to the church site).",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "generate:types": "payload generate:types",
+    "payload": "payload"
+  },
+  "dependencies": {
+    "@payloadcms/db-postgres": "latest",
+    "@payloadcms/next": "latest",
+    "@payloadcms/richtext-lexical": "latest",
+    "next": "^16",
+    "payload": "latest",
+    "react": "^19",
+    "react-dom": "^19",
+    "sharp": "^0.33"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.1",
+    "@tailwindcss/typography": "^0.5.20",
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "postcss": "^8.5.15",
+    "tailwindcss": "^4.3.1",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": "^20 || ^22"
+  }
+}
