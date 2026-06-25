@@ -3,14 +3,12 @@ import { admins } from '../access'
 import { ownStudentRecordOrAdmin } from '../access'
 
 /**
- * Student/Parent directory — the gated "member directory" equivalent.
+ * Student/Parent directory — gated; access limited to the student themselves or admin.
  *
  * SECURITY NOTE (read before going live):
- * The church site authenticates with Membership ID + Date of Birth. DOB is
- * LOW-ENTROPY and guessable, so do NOT ship it as the only factor for real
- * student PII. This collection is auth-enabled for the dummy build; for the
- * real site, keep Admission No as the identifier but add a one-time code
- * (email/SMS/WhatsApp) before exposing records, plus rate limiting + lockout.
+ * DOB is LOW-ENTROPY and guessable, so do NOT ship it as the only auth factor for
+ * real student PII. For production, keep Admission No as the identifier but add a
+ * one-time code (email/SMS/WhatsApp) before exposing records, plus rate limiting + lockout.
  */
 export const Students: CollectionConfig = {
   slug: 'students',

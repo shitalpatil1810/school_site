@@ -1,6 +1,5 @@
 import type { Block } from 'payload'
 
-// Maps to the church site's History timeline.
 export const Timeline: Block = {
   slug: 'timeline',
   labels: { singular: 'Timeline', plural: 'Timelines' },

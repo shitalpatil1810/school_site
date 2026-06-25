@@ -1,10 +1,9 @@
 # School Site — Project Memory
 
-Demo school website built with **Next.js 16 + Payload CMS 3**. This is a practice
-build that will be cloned into a real **church website** afterward, so keep the
-structure clean, generic, and reusable.
+School website built with **Next.js 16 + Payload CMS 3**. Keep the structure
+clean and reusable.
 
-See @docs/PROJECT_CONTEXT.md for the full background and the church→school feature mapping.
+See @docs/PROJECT_CONTEXT.md for full background.
 See @README.md for setup and run commands.
 
 ## Stack (do not swap without asking)
@@ -34,8 +33,8 @@ See @README.md for setup and run commands.
 ## IMPORTANT — security rules
 - The `students` collection holds PII. NEVER make it publicly readable. Read access is
   `ownStudentRecordOrAdmin` only. Do not add public endpoints that expose student data.
-- The church/school auth idea (ID + Date of Birth) is WEAK. Do NOT ship DOB as a sole
-  credential. For production, keep Admission/Membership No as the identifier but add a
+- The student auth idea (Admission No + Date of Birth) is WEAK. Do NOT ship DOB as a sole
+  credential. For production, keep Admission No as the identifier but add a
   one-time code (email/SMS/WhatsApp) + rate limiting + lockout before exposing records.
 - NEVER commit `.env`. Secrets only via environment variables.
 

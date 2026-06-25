@@ -2,8 +2,7 @@
 
 A structurally complete starter for a school website (news, galleries, faculty,
 flexible pages, a gated student portal) built on **Next.js 16 + Payload CMS 3 +
-PostgreSQL**. Intended as a practice run before building a church website with the
-same architecture. See `docs/PROJECT_CONTEXT.md` and `CLAUDE.md`.
+PostgreSQL**. See `docs/PROJECT_CONTEXT.md` and `CLAUDE.md`.
 
 ## What's included
 - `src/payload.config.ts`, all collections, globals, blocks, and access helpers

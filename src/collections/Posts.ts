@@ -4,7 +4,6 @@ import { ImageSlider } from '../blocks/ImageSlider'
 import { ImageBlock } from '../blocks/ImageBlock'
 import { ImageText } from '../blocks/ImageText'
 
-// News & Events articles. Maps to the church site's /News module.
 export const Posts: CollectionConfig = {
   slug: 'posts',
   admin: { useAsTitle: 'title', defaultColumns: ['title', 'category', 'publishedAt', '_status'], group: 'Content' },

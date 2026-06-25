@@ -1,7 +1,7 @@
 {
   "name": "school-site",
   "version": "0.1.0",
-  "description": "Dummy school website — Next.js + Payload CMS practice build (precursor to the church site).",
+  "description": "School website built with Next.js + Payload CMS 3 + PostgreSQL.",
   "type": "module",
   "scripts": {
     "dev": "next dev",

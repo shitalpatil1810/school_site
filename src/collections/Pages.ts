@@ -6,7 +6,6 @@ import { ImageText } from '../blocks/ImageText'
 import { Timeline } from '../blocks/Timeline'
 
 // Flexible content pages (About, History, Academics, Facilities, Departments...).
-// Maps to the church site's content pages (History, Orgs, School, Hierarchy).
 export const Pages: CollectionConfig = {
   slug: 'pages',
   admin: { useAsTitle: 'title', defaultColumns: ['title', 'slug', '_status'], group: 'Content' },
