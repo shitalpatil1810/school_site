@@ -1,5 +1,8 @@
 import type { CollectionConfig } from 'payload'
 import { admins, adminsOrPublished } from '../access'
+import { ImageSlider } from '../blocks/ImageSlider'
+import { ImageBlock } from '../blocks/ImageBlock'
+import { ImageText } from '../blocks/ImageText'
 
 // News & Events articles. Maps to the church site's /News module.
 export const Posts: CollectionConfig = {
@@ -25,5 +28,13 @@ export const Posts: CollectionConfig = {
     { name: 'coverImage', type: 'upload', relationTo: 'media' },
     { name: 'excerpt', type: 'textarea', admin: { description: 'Short summary for listing cards.' } },
     { name: 'content', type: 'richText' },
+    {
+      name: 'blocks',
+      type: 'blocks',
+      blocks: [ImageSlider, ImageBlock, ImageText],
+      admin: {
+        description: 'Optional: add image slideshows, positioned images, or image+text sections below the article body.',
+      },
+    },
   ],
 }

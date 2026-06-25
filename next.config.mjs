@@ -24,6 +24,7 @@ const nextConfig = {
       },
     ]
   },
+  devIndicators: false,
   // Add image domains / remotePatterns here when you move media to S3/R2.
 }
 

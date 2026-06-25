@@ -2,6 +2,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import Link from 'next/link'
 import HeroCarousel from './components/HeroCarousel'
+import GalleryLightbox from './components/GalleryLightbox'
 
 export const revalidate = 60
 
@@ -105,19 +106,16 @@ export default async function HomePage() {
           <section>
             <p className="text-center text-xs font-bold tracking-widest text-amber-600 uppercase mb-1">Gallery</p>
             <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">Photo Gallery</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {galleryImages.map((row: any, i: number) => (
-                <div key={i} className="relative aspect-square overflow-hidden rounded-2xl bg-gray-100 shadow-sm hover:shadow-md transition group">
-                  {row.image?.url && (
-                    <img
-                      src={row.image.url}
-                      alt={row.caption ?? ''}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  )}
-                </div>
-              ))}
-            </div>
+            <GalleryLightbox
+              items={galleryImages
+                .filter((row: any) => row.image?.url)
+                .map((row: any) => ({
+                  url: row.image.url,
+                  alt: row.caption ?? '',
+                  caption: row.caption ?? '',
+                }))}
+              columns={3}
+            />
             <div className="text-center mt-8">
               <Link href="/gallery" className="inline-block border border-gray-300 text-gray-700 font-medium px-6 py-2 rounded-full hover:border-amber-600 hover:text-amber-600 transition">
                 View full gallery →

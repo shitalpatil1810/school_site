@@ -48,18 +48,18 @@ export default async function FrontendLayout({ children }: { children: React.Rea
       <body className="min-h-screen bg-blue-300 text-gray-900 antialiased">
 
         {/* ── Header ── */}
-        <header className="bg-white shadow-sm">
+        <header className="bg-blue-300">
           {/* Top bar: logo + school name */}
-          <div className="max-w-6xl mx-auto px-6 py-3 flex items-center gap-3">
-            <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
+          <div className="max-w-6xl mx-auto px-6 py-4 flex items-center gap-4">
+            <Link href="/" className="flex items-center gap-4 hover:opacity-90 transition-opacity">
               {logoUrl ? (
-                <img src={logoUrl} alt={schoolName} className="h-10 w-auto object-contain" />
+                <img src={logoUrl} alt={schoolName} className="h-16 w-auto object-contain" />
               ) : (
-                <div className="w-10 h-10 rounded-full bg-blue-800 flex items-center justify-center text-white font-bold text-lg shrink-0">
+                <div className="w-16 h-16 rounded-full bg-blue-800 flex items-center justify-center text-white font-bold text-2xl shrink-0">
                   {schoolName.charAt(0)}
                 </div>
               )}
-              <span className="font-extrabold text-xl text-blue-800 tracking-tight">{schoolName}</span>
+              <span className="font-extrabold text-2xl text-blue-900 tracking-tight">{schoolName}</span>
             </Link>
           </div>
           {/* Nav bar — dark blue */}
