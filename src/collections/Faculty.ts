@@ -4,7 +4,14 @@ import { admins, anyone } from '../access'
 // Faculty / staff / leadership profiles. Maps to /Committee (team grid) + hierarchy.
 export const Faculty: CollectionConfig = {
   slug: 'faculty',
-  admin: { useAsTitle: 'name', defaultColumns: ['name', 'designation', 'category', 'order'], group: 'Content' },
+  admin: {
+    useAsTitle: 'name',
+    defaultColumns: ['name', 'designation', 'category', 'order'],
+    group: 'Content',
+    components: {
+      beforeList: ['@/components/FacultyImportButton#FacultyImportButton'],
+    },
+  },
   access: { read: anyone, create: admins, update: admins, delete: admins },
   fields: [
     { name: 'name', type: 'text', required: true },
