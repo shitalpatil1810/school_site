@@ -9,7 +9,7 @@ export const Faculty: CollectionConfig = {
     defaultColumns: ['name', 'designation', 'category', 'order'],
     group: 'Content',
     components: {
-      beforeList: ['@/components/FacultyImportButton#FacultyImportButton'],
+      beforeListTable: ['@/components/FacultyImportButton#FacultyImportButton'],
     },
   },
   access: { read: anyone, create: admins, update: admins, delete: admins },

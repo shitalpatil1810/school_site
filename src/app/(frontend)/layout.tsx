@@ -45,31 +45,31 @@ export default async function FrontendLayout({ children }: { children: React.Rea
 
   return (
     <html lang="en">
-      <body className="min-h-screen bg-blue-300 text-gray-900 antialiased">
+      <body className="min-h-screen bg-gray-100 text-gray-900 antialiased">
 
         {/* ── Header ── */}
-        <header className="bg-blue-300">
+        <header className="bg-gray-100">
           {/* Top bar: logo + school name */}
           <div className="max-w-6xl mx-auto px-6 py-4 flex items-center gap-4">
             <Link href="/" className="flex items-center gap-4 hover:opacity-90 transition-opacity">
               {logoUrl ? (
                 <img src={logoUrl} alt={schoolName} className="h-16 w-auto object-contain" />
               ) : (
-                <div className="w-16 h-16 rounded-full bg-blue-800 flex items-center justify-center text-white font-bold text-2xl shrink-0">
+                <div className="w-16 h-16 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold text-2xl shrink-0">
                   {schoolName.charAt(0)}
                 </div>
               )}
-              <span className="font-extrabold text-2xl text-blue-900 tracking-tight">{schoolName}</span>
+              <span className="font-extrabold text-2xl text-gray-900 tracking-tight">{schoolName}</span>
             </Link>
           </div>
-          {/* Nav bar — dark blue */}
-          <div className="bg-blue-800">
+          {/* Nav bar */}
+          <div className="bg-gray-800">
             <nav className="max-w-6xl mx-auto px-6 flex items-center gap-1 overflow-x-auto">
               {DEFAULT_NAV.map((item, i) => (
                 <Link
                   key={i}
                   href={item.url}
-                  className="shrink-0 px-4 py-3 text-sm font-medium text-blue-100 hover:text-white hover:bg-blue-700 transition-colors border-b-2 border-transparent hover:border-white"
+                  className="shrink-0 px-4 py-3 text-sm font-medium text-gray-100 hover:text-white hover:bg-gray-700 transition-colors border-b-2 border-transparent hover:border-white"
                 >
                   {item.label}
                 </Link>
@@ -202,7 +202,7 @@ export default async function FrontendLayout({ children }: { children: React.Rea
           </div>
 
           {/* Bottom bar */}
-          <div className="bg-blue-900 text-blue-200 text-sm text-center py-4 px-6">
+          <div className="bg-gray-900 text-gray-300 text-sm text-center py-4 px-6">
             {copyright}
           </div>
         </footer>

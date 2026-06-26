@@ -33,10 +33,10 @@ export default function HeroCarousel({ slides, schoolName, tagline }: Props) {
   const fallback = slides.length === 0
 
   return (
-    <section className="relative w-full bg-blue-800 text-white overflow-hidden rounded-2xl shadow-md">
+    <section className="relative w-full bg-gray-800 text-white overflow-hidden rounded-2xl shadow-md">
       {/* Slides */}
       {fallback ? (
-        <div className="h-[520px] bg-gradient-to-br from-blue-900 to-blue-600" />
+        <div className="h-[520px] bg-gradient-to-br from-gray-900 to-gray-600" />
       ) : (
         slides.map((slide, i) => (
           <div
@@ -52,7 +52,7 @@ export default function HeroCarousel({ slides, schoolName, tagline }: Props) {
                 draggable={false}
               />
             ) : (
-              <div className="h-[520px] bg-gradient-to-br from-blue-900 to-blue-600" />
+              <div className="h-[520px] bg-gradient-to-br from-gray-900 to-gray-600" />
             )}
           </div>
         ))
@@ -62,7 +62,7 @@ export default function HeroCarousel({ slides, schoolName, tagline }: Props) {
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 z-10">
 
         {(fallback ? tagline : (slides[active]?.subheading ?? tagline)) && (
-          <p className="mt-3 text-lg text-blue-100 max-w-xl drop-shadow">
+          <p className="mt-3 text-lg text-gray-100 max-w-xl drop-shadow">
             {fallback ? tagline : (slides[active]?.subheading ?? tagline)}
           </p>
         )}

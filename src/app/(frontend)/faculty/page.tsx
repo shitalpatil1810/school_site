@@ -42,15 +42,15 @@ export default async function FacultyPage() {
                     <img
                       src={person.photo.url}
                       alt={person.name}
-                      className="w-28 h-28 rounded-full object-cover mx-auto border-2 border-blue-100 group-hover:border-blue-400 transition"
+                      className="w-28 h-28 rounded-full object-cover mx-auto border-2 border-gray-200 group-hover:border-gray-400 transition"
                     />
                   ) : (
-                    <div className="w-28 h-28 rounded-full bg-blue-50 border-2 border-blue-100 mx-auto flex items-center justify-center text-4xl">
+                    <div className="w-28 h-28 rounded-full bg-gray-50 border-2 border-gray-200 mx-auto flex items-center justify-center text-4xl">
                       👤
                     </div>
                   )}
                   <p className="mt-3 font-semibold text-gray-800">{person.name}</p>
-                  <p className="text-sm text-blue-600">{person.designation}</p>
+                  <p className="text-sm text-gray-600">{person.designation}</p>
                   {person.department && <p className="text-xs text-gray-400">{person.department}</p>}
                 </div>
               ))}

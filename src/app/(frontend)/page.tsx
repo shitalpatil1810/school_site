@@ -3,6 +3,8 @@ import config from '@payload-config'
 import Link from 'next/link'
 import HeroCarousel from './components/HeroCarousel'
 import GalleryLightbox from './components/GalleryLightbox'
+import { BlockRenderer } from './components/blocks/BlockRenderer'
+import type { Page } from '@/payload-types'
 
 export const revalidate = 60
 
@@ -22,7 +24,7 @@ function DateBadge({ iso }: { iso?: string | null }) {
 export default async function HomePage() {
   const payload = await getPayload({ config })
 
-  const [settings, { docs: latestPosts }, { docs: leadership }, { docs: galleries }] =
+  const [settings, { docs: latestPosts }, { docs: leadership }, { docs: galleries }, { docs: aboutDocs }] =
     await Promise.all([
       payload.findGlobal({ slug: 'site-settings', depth: 1 }),
       payload.find({
@@ -36,7 +38,13 @@ export default async function HomePage() {
       payload.find({
         collection: 'galleries', limit: 1, sort: '-date', depth: 2,
       }),
+      payload.find({
+        collection: 'pages', limit: 1, depth: 2,
+        where: { slug: { equals: 'aboutus' }, _status: { equals: 'published' } },
+      }),
     ])
+
+  const aboutPage = aboutDocs[0] as Page | undefined
 
   const heroSlides: any[] = settings?.heroSlides ?? []
   const schoolHours: any[] = settings?.schoolHours ?? []
@@ -53,6 +61,16 @@ export default async function HomePage() {
           tagline={settings?.tagline}
         />
       </div>
+
+      {/* ── About Us section ── */}
+      {aboutPage && (
+        <div className="max-w-6xl mx-auto px-6 pt-10">
+          <h2 className="text-3xl font-bold text-gray-900 text-center mb-6">{aboutPage.title}</h2>
+          {aboutPage.layout && aboutPage.layout.length > 0 && (
+            <BlockRenderer layout={aboutPage.layout} />
+          )}
+        </div>
+      )}
 
       {/* ── Page sections — centred, max-width ── */}
       <div className="max-w-6xl mx-auto px-6 py-12 space-y-16">
@@ -132,9 +150,9 @@ export default async function HomePage() {
               {leadership.map((person: any) => (
                 <div key={person.id} className="text-center">
                   {person.photo?.url ? (
-                    <img src={person.photo.url} alt={person.name} className="w-24 h-24 rounded-full object-cover mx-auto border-2 border-blue-100" />
+                    <img src={person.photo.url} alt={person.name} className="w-24 h-24 rounded-full object-cover mx-auto border-2 border-gray-200" />
                   ) : (
-                    <div className="w-24 h-24 rounded-full bg-blue-100 mx-auto flex items-center justify-center text-3xl">👤</div>
+                    <div className="w-24 h-24 rounded-full bg-gray-100 mx-auto flex items-center justify-center text-3xl">👤</div>
                   )}
                   <p className="mt-2 font-semibold text-gray-800 text-sm">{person.name}</p>
                   <p className="text-xs text-gray-500">{person.designation}</p>

@@ -1,6 +1,6 @@
 export function FacultyImportButton() {
   return (
-    <div style={{ marginBottom: '1.25rem' }}>
+    <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '0.75rem' }}>
       <a
         href="/tools/faculty-import"
         target="_blank"
@@ -11,15 +11,16 @@ export function FacultyImportButton() {
           gap: '0.4rem',
           padding: '0.45rem 1rem',
           background: 'transparent',
-          color: 'rgba(255,255,255,0.75)',
-          border: '1px solid rgba(255,255,255,0.2)',
-          borderRadius: '6px',
+          color: 'var(--theme-text)',
+          border: '1px solid var(--theme-border-color)',
+          borderRadius: '4px',
           textDecoration: 'none',
           fontSize: '0.8rem',
           fontWeight: 500,
+          cursor: 'pointer',
         }}
       >
-        ↑ Import from Excel
+        ↑ Bulk Import from Excel
       </a>
     </div>
   )

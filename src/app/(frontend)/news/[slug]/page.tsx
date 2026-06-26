@@ -8,7 +8,7 @@ import PostImageSlider from '../../components/PostImageSlider'
 export const revalidate = 60
 
 const CATEGORY_BADGE: Record<string, string> = {
-  news: 'bg-blue-100 text-blue-700',
+  news: 'bg-gray-100 text-gray-700',
   event: 'bg-green-100 text-green-700',
   notice: 'bg-amber-100 text-amber-700',
 }
