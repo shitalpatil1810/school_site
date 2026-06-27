@@ -20,9 +20,9 @@ export function HeroBlock({ block }: { block: HeroBlockType }) {
         />
       )}
       <div className="relative z-10 mx-auto max-w-3xl px-6 py-16 text-center">
-        <h1 className="text-4xl font-bold leading-tight">{block.heading}</h1>
+        <h1 className="text-2xl sm:text-4xl font-bold leading-tight text-balance">{block.heading}</h1>
         {block.subheading && (
-          <p className="mt-4 text-lg opacity-90">{block.subheading}</p>
+          <p className="mt-3 sm:mt-4 text-base sm:text-lg opacity-90">{block.subheading}</p>
         )}
         {block.ctaLabel && block.ctaUrl && (
           <a

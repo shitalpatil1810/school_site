@@ -8,7 +8,11 @@
     "build": "payload generate:types && payload generate:importmap && next build",
     "start": "next start",
     "generate:types": "payload generate:types",
-    "payload": "payload"
+    "payload": "payload",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:codegen": "playwright codegen http://localhost:3000",
+    "test:e2e:report": "playwright show-report tests/playwright-report"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "latest",
@@ -24,6 +28,7 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
+    "@playwright/test": "^1.61.1",
     "@tailwindcss/postcss": "^4.3.1",
     "@tailwindcss/typography": "^0.5.20",
     "@types/node": "^22",

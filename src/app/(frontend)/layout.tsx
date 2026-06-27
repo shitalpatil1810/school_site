@@ -3,16 +3,45 @@ import React from 'react'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import Link from 'next/link'
+import Image from 'next/image'
+import SiteNav from './components/SiteNav'
+
+export const revalidate = 60
 
 export const metadata = { title: 'Greenfield Public School', description: 'Demo school website' }
 
-const DEFAULT_NAV = [
+export const DEFAULT_NAV = [
   { label: 'Home', url: '/' },
   { label: 'News & Events', url: '/news' },
   { label: 'Gallery', url: '/gallery' },
   { label: 'Faculty', url: '/faculty' },
   { label: 'Contact', url: '/contact' },
 ]
+
+type SocialKey = 'facebook' | 'instagram' | 'youtube' | 'whatsapp'
+
+const SOCIAL_ICONS: { key: SocialKey; icon: string; label: string }[] = [
+  { key: 'facebook', icon: 'f', label: 'Facebook' },
+  { key: 'instagram', icon: 'ig', label: 'Instagram' },
+  { key: 'youtube', icon: '▶', label: 'YouTube' },
+  { key: 'whatsapp', icon: '✆', label: 'WhatsApp' },
+]
+
+function safeSocialUrl(url: unknown): string | null {
+  if (typeof url !== 'string' || !url) return null
+  try {
+    const { protocol } = new URL(url)
+    return protocol === 'https:' || protocol === 'http:' ? url : null
+  } catch {
+    return null
+  }
+}
+
+function socialHref(key: SocialKey, value: unknown): string | null {
+  if (typeof value !== 'string' || !value) return null
+  if (key === 'whatsapp') return `https://wa.me/${value}`
+  return safeSocialUrl(value)
+}
 
 export default async function FrontendLayout({ children }: { children: React.ReactNode }) {
   const payload = await getPayload({ config })
@@ -26,60 +55,56 @@ export default async function FrontendLayout({ children }: { children: React.Rea
   const contact = settings?.contact ?? {}
   const social = settings?.social ?? {}
   const schoolHours: any[] = settings?.schoolHours ?? []
-  const quickLinks: any[] = (footer as any)?.quickLinks?.length
-    ? (footer as any).quickLinks
-    : DEFAULT_NAV
+
+  const quickLinks: { label: string; url: string }[] = (
+    (footer as any)?.quickLinks?.length
+      ? (footer as any).quickLinks
+      : DEFAULT_NAV
+  ).filter((link: any) => typeof link?.url === 'string' && link.url)
+
   const copyright: string =
     (footer as any)?.copyright ?? `Copyright © ${new Date().getFullYear()} ${schoolName}. All Rights Reserved.`
-
-  const half = Math.ceil(quickLinks.length / 2)
-  const linksLeft = quickLinks.slice(0, half)
-  const linksRight = quickLinks.slice(half)
-
-  const SOCIAL_ICONS: { key: keyof typeof social; icon: string; label: string }[] = [
-    { key: 'facebook', icon: 'f', label: 'Facebook' },
-    { key: 'instagram', icon: '◻', label: 'Instagram' },
-    { key: 'youtube', icon: '▶', label: 'YouTube' },
-    { key: 'whatsapp', icon: '✆', label: 'WhatsApp' },
-  ]
 
   return (
     <html lang="en">
       <body className="min-h-screen bg-gray-100 text-gray-900 antialiased">
 
+        {/* Skip navigation — must be first focusable element (WCAG 2.4.1) */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-2 focus:left-2 focus:px-4 focus:py-2 focus:bg-white focus:text-gray-900 focus:rounded-lg focus:shadow-lg focus-visible:ring-2 focus-visible:ring-gray-800"
+        >
+          Skip to main content
+        </a>
+
         {/* ── Header ── */}
         <header className="bg-gray-100">
           {/* Top bar: logo + school name */}
-          <div className="max-w-6xl mx-auto px-6 py-4 flex items-center gap-4">
-            <Link href="/" className="flex items-center gap-4 hover:opacity-90 transition-opacity">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center gap-3 sm:gap-4">
+            <Link href="/" className="flex items-center gap-3 sm:gap-4 hover:opacity-90 transition-opacity min-w-0">
               {logoUrl ? (
-                <img src={logoUrl} alt={schoolName} className="h-16 w-auto object-contain" />
+                <Image
+                  src={logoUrl}
+                  alt={schoolName}
+                  width={64}
+                  height={64}
+                  className="h-12 sm:h-16 w-auto object-contain shrink-0"
+                  priority
+                />
               ) : (
-                <div className="w-16 h-16 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold text-2xl shrink-0">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold text-xl sm:text-2xl shrink-0">
                   {schoolName.charAt(0)}
                 </div>
               )}
-              <span className="font-extrabold text-2xl text-gray-900 tracking-tight">{schoolName}</span>
+              <span className="font-extrabold text-lg sm:text-2xl text-gray-900 tracking-tight leading-tight">{schoolName}</span>
             </Link>
           </div>
-          {/* Nav bar */}
-          <div className="bg-gray-800">
-            <nav className="max-w-6xl mx-auto px-6 flex items-center gap-1 overflow-x-auto">
-              {DEFAULT_NAV.map((item, i) => (
-                <Link
-                  key={i}
-                  href={item.url}
-                  className="shrink-0 px-4 py-3 text-sm font-medium text-gray-100 hover:text-white hover:bg-gray-700 transition-colors border-b-2 border-transparent hover:border-white"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
-          </div>
+          {/* Nav bar — desktop horizontal / mobile hamburger */}
+          <SiteNav items={DEFAULT_NAV} />
         </header>
 
         {/* ── Page content ── */}
-        <main className="w-full">{children}</main>
+        <main id="main-content" className="w-full">{children}</main>
 
         {/* ── Footer ── */}
         <footer>
@@ -94,7 +119,7 @@ export default async function FrontendLayout({ children }: { children: React.Rea
                 {schoolHours.length > 0 ? (
                   <ul className="space-y-2 text-sm">
                     {schoolHours.map((row: any, i: number) => (
-                      <li key={i} className="flex items-start gap-2">
+                      <li key={row.label ?? i} className="flex items-start gap-2">
                         <span className="mt-1.5 w-2 h-2 rounded-full bg-red-700 shrink-0" />
                         <span>{row.label}{row.time ? ` — ${row.time}` : ''}</span>
                       </li>
@@ -117,48 +142,42 @@ export default async function FrontendLayout({ children }: { children: React.Rea
                   </ul>
                 )}
 
-                {/* Social icons */}
+                {/* Social icons — 44×44 touch targets, sanitized hrefs */}
                 <div className="flex gap-2 mt-8 flex-wrap">
-                  {social.facebook && (
-                    <a href={social.facebook} target="_blank" rel="noopener noreferrer"
-                      className="w-9 h-9 rounded-full border border-gray-600 flex items-center justify-center text-xs hover:bg-red-700 hover:border-red-700 transition"
-                      aria-label="Facebook">f</a>
-                  )}
-                  {social.instagram && (
-                    <a href={social.instagram} target="_blank" rel="noopener noreferrer"
-                      className="w-9 h-9 rounded-full border border-gray-600 flex items-center justify-center text-xs hover:bg-red-700 hover:border-red-700 transition"
-                      aria-label="Instagram">ig</a>
-                  )}
-                  {social.youtube && (
-                    <a href={social.youtube} target="_blank" rel="noopener noreferrer"
-                      className="w-9 h-9 rounded-full border border-gray-600 flex items-center justify-center text-xs hover:bg-red-700 hover:border-red-700 transition"
-                      aria-label="YouTube">▶</a>
-                  )}
-                  {social.whatsapp && (
-                    <a href={`https://wa.me/${social.whatsapp}`} target="_blank" rel="noopener noreferrer"
-                      className="w-9 h-9 rounded-full border border-gray-600 flex items-center justify-center text-xs hover:bg-red-700 hover:border-red-700 transition"
-                      aria-label="WhatsApp">✆</a>
-                  )}
-                  {/* Show placeholder circles if no social links configured */}
-                  {!social.facebook && !social.instagram && !social.youtube && !social.whatsapp && (
-                    ['f', 'ig', '▶', '✆', 'in'].map((icon) => (
-                      <span key={icon}
-                        className="w-9 h-9 rounded-full border border-gray-600 flex items-center justify-center text-xs text-gray-500">
+                  {SOCIAL_ICONS.map(({ key, icon, label }) => {
+                    const href = socialHref(key, (social as Record<SocialKey, unknown>)[key])
+                    return href ? (
+                      <a
+                        key={key}
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-11 h-11 rounded-full border border-gray-600 flex items-center justify-center text-xs hover:bg-red-700 hover:border-red-700 transition"
+                        aria-label={label}
+                      >
+                        {icon}
+                      </a>
+                    ) : (
+                      <span
+                        key={key}
+                        className="w-11 h-11 rounded-full border border-gray-600 flex items-center justify-center text-xs text-gray-500"
+                        aria-hidden="true"
+                      >
                         {icon}
                       </span>
-                    ))
-                  )}
+                    )
+                  })}
                 </div>
               </div>
 
-              {/* ── Col 2: Quick Links (2 sub-columns) ── */}
+              {/* ── Col 2: Quick Links ── */}
               <div>
                 <h3 className="text-white font-bold text-lg mb-1">Quick Links</h3>
                 <div className="w-8 h-0.5 bg-red-700 mb-5" />
                 <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-                  {[...linksLeft, ...linksRight].map((link: any, i: number) => (
+                  {quickLinks.map((link) => (
                     <Link
-                      key={i}
+                      key={link.url}
                       href={link.url}
                       className="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors"
                     >
@@ -183,13 +202,23 @@ export default async function FrontendLayout({ children }: { children: React.Rea
                   {contact.phone && (
                     <div className="flex gap-3">
                       <span className="mt-1 w-8 h-8 bg-red-700 rounded flex items-center justify-center shrink-0 text-white text-base">📞</span>
-                      <a href={`tel:${contact.phone}`} className="text-gray-400 hover:text-white transition-colors">{contact.phone}</a>
+                      <a
+                        href={`tel:${String(contact.phone).replace(/[^\d+]/g, '')}`}
+                        className="text-gray-400 hover:text-white transition-colors"
+                      >
+                        {contact.phone}
+                      </a>
                     </div>
                   )}
                   {contact.email && (
                     <div className="flex gap-3">
                       <span className="mt-1 w-8 h-8 bg-red-700 rounded flex items-center justify-center shrink-0 text-white text-base">✉️</span>
-                      <a href={`mailto:${contact.email}`} className="text-gray-400 hover:text-white transition-colors break-all">{contact.email}</a>
+                      <a
+                        href={`mailto:${String(contact.email).split('?')[0]}`}
+                        className="text-gray-400 hover:text-white transition-colors break-all"
+                      >
+                        {contact.email}
+                      </a>
                     </div>
                   )}
                   {!contact.address && !contact.phone && !contact.email && (

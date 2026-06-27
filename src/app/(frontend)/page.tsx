@@ -53,8 +53,8 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* ── Hero carousel ── */}
-      <div className="max-w-6xl mx-auto px-6 pt-6">
+      {/* ── Hero carousel — full-bleed on mobile, contained + rounded on sm+ ── */}
+      <div className="max-w-6xl mx-auto sm:px-6 sm:pt-6">
         <HeroCarousel
           slides={heroSlides}
           schoolName={settings?.schoolName}

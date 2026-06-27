@@ -115,7 +115,7 @@ export default function GalleryLightbox({
 
           {/* image */}
           <div
-            className="max-w-5xl max-h-[85vh] w-full mx-16 flex flex-col items-center"
+            className="max-w-5xl max-h-[85vh] w-full mx-4 sm:mx-16 flex flex-col items-center"
             onClick={(e) => e.stopPropagation()}
           >
             <img
