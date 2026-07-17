@@ -49,7 +49,7 @@ export default async function HomePage() {
   const heroSlides: any[] = settings?.heroSlides ?? []
   const schoolHours: any[] = settings?.schoolHours ?? []
   const latestAlbum: any = galleries[0]
-  const galleryImages: any[] = (latestAlbum?.images ?? []).slice(0, 4)
+  const galleryImages: any[] = (latestAlbum?.images ?? []).slice(0, 3)
 
   return (
     <>
@@ -146,9 +146,9 @@ export default async function HomePage() {
         {leadership.length > 0 && (
           <section>
             <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">Leadership</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+            <div className="flex flex-wrap justify-center gap-6">
               {leadership.map((person: any) => (
-                <div key={person.id} className="text-center">
+                <div key={person.id} className="text-center w-24">
                   {person.photo?.url ? (
                     <img src={person.photo.url} alt={person.name} className="w-24 h-24 rounded-full object-cover mx-auto border-2 border-gray-200" />
                   ) : (

@@ -1,4 +1,5 @@
 import { getPayload } from 'payload'
+import Image from 'next/image'
 import config from '@payload-config'
 
 export const revalidate = 60
@@ -39,13 +40,15 @@ export default async function FacultyPage() {
               {people.map((person: any) => (
                 <div key={person.id} className="text-center group">
                   {person.photo?.url ? (
-                    <img
+                    <Image
                       src={person.photo.url}
                       alt={person.name}
-                      className="w-28 h-28 rounded-full object-cover mx-auto border-2 border-gray-200 group-hover:border-gray-400 transition"
+                      width={224}
+                      height={224}
+                      className="w-56 h-56 rounded-full object-cover mx-auto border-2 border-gray-200 group-hover:border-gray-400 transition"
                     />
                   ) : (
-                    <div className="w-28 h-28 rounded-full bg-gray-50 border-2 border-gray-200 mx-auto flex items-center justify-center text-4xl">
+                    <div className="w-56 h-56 rounded-full bg-gray-50 border-2 border-gray-200 mx-auto flex items-center justify-center text-6xl">
                       👤
                     </div>
                   )}
